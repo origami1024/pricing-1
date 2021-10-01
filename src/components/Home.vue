@@ -1,13 +1,13 @@
 <template>
-  <div class="mb-6 bg-red-800 text-left ml-64 flex">
+  <div class="mb-6 text-left ml-64 flex">
 <!--    {{ priceObj }}-->
-    <div class="mr-5">
-      <svg width="360" height="302" viewBox="0 -20 300 200" style="border: 1px solid red; font-size: 11px;">
+    <div class="mr-5 p-1  bg-red-800">
+      <svg width="410" height="302" viewBox="0 -20 356 200" style="font-size: 10px;">
         <svg-bar
           :height="200"
           :fill="'#000'"
           :text-color="'#fff'"
-          :value="priceObj.totalPrice()"
+          :value="priceObj.totalPrice().toFixed(0)"
           label="TP"
           :x="0"
         />
@@ -15,7 +15,7 @@
           :height="(priceObj.discountedPrice() / priceObj.totalPrice() * 200)"
           :fill="'#000'"
           :text-color="'#fff'"
-          :value="priceObj.discountedPrice()"
+          :value="priceObj.discountedPrice().toFixed(0)"
           label="DP"
           :x="60"
         />
@@ -31,7 +31,7 @@
           :height="(priceObj.markup.absoluteValue() / priceObj.totalPrice() * 200)"
           :fill="'green'"
           :text-color="'#fff'"
-          :value="priceObj.discountedMarkup.absoluteValue().toFixed(0)"
+          :value="priceObj.markup.absoluteValue().toFixed(0)"
           label="MARKUP"
           :x="180"
         />
@@ -44,37 +44,46 @@
           sub-label="DISCOUNT"
           :x="240"
         />
+        <svg-bar
+          :height="(priceObj.discountedMarkup.absoluteValue() / priceObj.totalPrice() * 200)"
+          :fill="'dodgerblue'"
+          :text-color="'#fff'"
+          :value="priceObj.discountedMarkup.absoluteValue().toFixed(0)"
+          label="MARKUP -"
+          sub-label="DISCOUNT"
+          :x="300"
+        />
       </svg>
     </div>
 
 
-    <div class="p-1 mr-5" style="font-size: 13px;">
+    <div class="p-1 mr-5 bg-red-800 w-80" style="font-size: 13px;">
       <div class="py-1">
         <div class="px-1 mb-5">
-          <div>Себестоимость (=COST)</div>
-          <input type="text" v-model="priceObj.cost" class="w-28">
+          <div class="flex justify-between">Себестоимость <span>(=COST)</span></div>
+          <input type="text" v-model="priceObj.cost" class="w-14"> rub
         </div>
         <div class="px-1 mb-5">
-          <div>Наценка на COST (=MARKUP)</div>
+          <div class="flex justify-between">Наценка на COST <span>(=MARKUP)</span></div>
           <div class="flex justify-between">
-            <input type="text" v-model="priceObj.markup.multiplierOnCost" style="width: 80px;">
-            <div>+{{ priceObj.markup.absoluteValue().toFixed(2) }}</div>
+            <input type="text" class="w-14" v-model="priceObj.markup.multiplierOnCost">
+            <div>+{{ priceObj.markup.absoluteValue().toFixed(2) }} rub</div>
           </div>
         </div>
         <div class="px-1 mb-5">
-          <div>Total Price (=TP)</div>
-          <div>= {{ priceObj.totalPrice().toFixed(0) }}</div>
+          <div class="flex justify-between">Total Price <span>(=TP)</span></div>
+          <div>= {{ priceObj.totalPrice().toFixed(0) }} rub</div>
         </div>
         <div class="px-1 mb-5">
-          <div>Скидка на TP (=TP-DISCOUNT)</div>
-          <input type="text" v-model="priceObj.discount.multiplierOnTotalPrice" style="width: 80px;">
+          <div class="flex justify-between">Скидка на TP <span>(=TP-DISCOUNT)</span></div>
+          <input type="text" v-model="priceObj.discount.multiplierOnTotalPrice" class="w-14">
           <br><br>
-          <div>Скидка на COST (=COST-DISCOUNT)</div>
-          <div>{{ priceObj.discount.multiplierOnCost.toFixed(3) }} (-{{priceObj.discount.absoluteValue()}})</div>
+          <div class="flex justify-between">Скидка на COST <span>(=COST-DISCOUNT)</span></div>
+          <div>{{ priceObj.discount.multiplierOnCost.toFixed(3) }} (-{{priceObj.discount.absoluteValue().toFixed(2)}} rub)</div>
         </div>
         <div class="px-1 mb-5">
-          <div>Цена со скидкой (=DP)</div>
-          <div>= {{ priceObj.discountedPrice().toFixed(2) }}</div>
+          <div class="flex justify-between">Цена со скидкой <span>(=DP)</span></div>
+          <div>= {{ priceObj.discountedPrice().toFixed(2) }} rub</div>
         </div>
       </div>
 
