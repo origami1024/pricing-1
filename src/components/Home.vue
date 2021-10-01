@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-6 text-left ml-64 flex">
+  <div class="mb-6 text-left ml-4 flex">
 <!--    {{ priceObj }}-->
     <div class="mr-5 p-1  bg-red-800">
       <svg width="410" height="302" viewBox="0 -20 356 200" style="font-size: 10px;">
